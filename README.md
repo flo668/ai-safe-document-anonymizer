@@ -8,7 +8,7 @@
 
 > **Privacy-preserving document processing** - Server-side multi-bestand anonimisatie tool met geavanceerde features voor tekst, Word, Excel en PDF documenten.
 
-[🌐 Live Demo](https://apps.nightstory.nl/anonimiseren/) | [📖 Documentation](docs/) | [🐛 Report Bug](https://github.com/username/repo/issues) | [💡 Request Feature](https://github.com/username/repo/issues/new?labels=enhancement)
+[🌐 Live Demo](https://apps.nightstory.nl/anonimiseren/) | [📖 Documentation](docs/) | [🐛 Report Bug](https://github.com/nmcroi/ai-safe-document-anonymizer/issues) | [💡 Request Feature](https://github.com/nmcroi/ai-safe-document-anonymizer/issues/new?labels=enhancement)
 
 ## ✨ Features
 
@@ -722,8 +722,8 @@ We verwelkomen contributions van iedereen! Of je nu een bug wilt fixen, een feat
 
 ### Hoe bij te dragen?
 
-1. **🐛 Bug Reports**: Vond je een bug? [Open een issue](https://github.com/username/repo/issues/new)
-2. **💡 Feature Requests**: Heb je een idee? [Suggest een feature](https://github.com/username/repo/issues/new?labels=enhancement)
+1. **🐛 Bug Reports**: Vond je een bug? [Open een issue](https://github.com/nmcroi/ai-safe-document-anonymizer/issues/new)
+2. **💡 Feature Requests**: Heb je een idee? [Suggest een feature](https://github.com/nmcroi/ai-safe-document-anonymizer/issues/new?labels=enhancement)
 3. **📖 Documentatie**: Zie een typo of onduidelijke uitleg? Open een PR!
 4. **🔧 Code**: Wil je code bijdragen? Check [CONTRIBUTING.md](CONTRIBUTING.md) voor guidelines
 
@@ -787,5 +787,5 @@ Zie [LICENSE](LICENSE) file voor volledige details.
 
 **Ontwikkeld met ❤️ voor privacy-compliant data processing**
 
-[![GitHub stars](https://img.shields.io/github/stars/username/repo.svg?style=social&label=Star)](https://github.com/username/repo)
-[![GitHub issues](https://img.shields.io/github/issues/username/repo.svg)](https://github.com/username/repo/issues)
+[![GitHub stars](https://img.shields.io/github/stars/nmcroi/ai-safe-document-anonymizer.svg?style=social&label=Star)](https://github.com/nmcroi/ai-safe-document-anonymizer)
+[![GitHub issues](https://img.shields.io/github/issues/nmcroi/ai-safe-document-anonymizer.svg)](https://github.com/nmcroi/ai-safe-document-anonymizer/issues)
