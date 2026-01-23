@@ -1,0 +1,20 @@
+[Unit]
+Description=Anonimiseren Tool Flask Application
+After=network.target
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+WorkingDirectory=/path/to/flask-anonimiseren-tool
+Environment="PATH=/path/to/flask-anonimiseren-tool/venv/bin"
+ExecStart=/path/to/flask-anonimiseren-tool/venv/bin/gunicorn -c gunicorn.conf.py app:app
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

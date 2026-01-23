@@ -1,0 +1,721 @@
+{% extends "base.html" %}
+
+{% block title %}Multi-Bestand Anonimiseren Tool{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="page-header position-relative">
+    <h1>Multi-Bestand Anonimiseren Tool</h1>
+    <p class="lead">
+        Upload .txt, .docx, of .xlsx bestanden, definieer regels, en anonimiseer gevoelige informatie met één klik.
+    </p>
+
+    <!-- Sessie Knop Rechtsboven -->
+    <div class="position-absolute top-0 end-0 d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-global-orange text-white" id="clear-session-btn-top">
+            <i class="bi bi-trash me-1"></i>
+            Start Nieuwe Sessie
+        </button>
+        <i class="bi bi-question-circle text-muted" style="font-size: 1.25rem; cursor: help;"
+           data-bs-toggle="tooltip" data-bs-placement="left"
+           title="Wat is een sessie? Al je geüploade bestanden, regels en instellingen. Sessions worden automatisch verwijderd na 24 uur."></i>
+    </div>
+</div>
+
+
+<!-- Tab Navigation -->
+<div class="d-flex justify-content-center mb-0 mt-5">
+    <ul class="nav nav-tabs" id="processingTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="text-tab" data-bs-toggle="tab" data-bs-target="#text-panel"
+                    type="button" role="tab">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="icon">
+                    <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+                </svg>
+                Tekst/Documenten
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="excel-tab" data-bs-toggle="tab" data-bs-target="#excel-panel"
+                    type="button" role="tab">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="icon">
+                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+                </svg>
+                Excel/CSV
+            </button>
+        </li>
+    </ul>
+</div>
+
+<div class="tab-content">
+    <!-- ========== TEXT/DOCX TAB ========== -->
+    <div class="tab-pane fade show active" id="text-panel">
+        <div class="row">
+            <div class="col-12">
+
+                <!-- Step 1: Upload Files -->
+                <div class="card mb-4">
+                    <div class="card-header bg-word-blue text-white">
+                        <h5>Upload Bestanden</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="dropzone" id="dropzone-text">
+                            <input type="file" id="file-input-text" multiple accept=".txt,.docx,.pdf,.md" class="d-none">
+                            <svg width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                            </svg>
+                            <p>Sleep bestanden hierheen of <span class="text-word-blue">klik om te selecteren</span></p>
+                            <small>Ondersteunde formaten: TXT, DOCX, PDF en MD (Markdown)</small>
+                        </div>
+                        <div id="file-list-text" class="mt-4"></div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Automatische Detectie Patronen -->
+                <div class="card mb-4">
+                    <div class="card-header bg-word-blue text-white">
+                        <h5 class="mb-0">Automatische Detectie Patronen</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" role="switch" id="auto-detect-enabled">
+                            <label class="form-check-label" for="auto-detect-enabled">
+                                Inschakelen
+                            </label>
+                        </div>
+
+                        <p class="text-muted" style="line-height: 1.6;">
+                            Automatische Detectie Patronen is een tool waarmee je automatisch telefoonnummers en e-mailadressen in je documenten kunt detecteren en anonimiseren.
+                            De tool herkent Nederlandse telefoonnummers (zoals 06-12345678 of +31 6 12345678) en e-mailadressen.
+                            Hieronder kun je aangeven door welke tekst (placeholder) deze gevonden gegevens moeten worden vervangen.
+                        </p>
+                        <p class="text-muted" style="line-height: 1.6; margin-bottom: 1rem;">
+                            <strong>*</strong> De tekst die je hieronder invult, komt precies zo in je document te staan. Als je <code style="color: var(--global-orange);">[TEL VERWIJDERD]</code> invult (inclusief de vierkante haken), dan worden telefoonnummers vervangen door <code style="color: var(--global-orange);">[TEL VERWIJDERD]</code>. Wil je geen haken? Vul dan bijvoorbeeld <code style="color: var(--global-orange);">TEL VERWIJDERD</code> in.
+                        </p>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="phone-placeholder" class="form-label fw-bold">
+                                    Placeholder voor Telefoonnummers
+                                </label>
+                                <input type="text" class="form-control" id="phone-placeholder" value="[TEL VERWIJDERD]"
+                                       placeholder="Bijv. [TEL VERWIJDERD]">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email-placeholder" class="form-label fw-bold">
+                                    Placeholder voor E-mails
+                                </label>
+                                <input type="text" class="form-control" id="email-placeholder" value="[EMAIL VERWIJDERD]"
+                                       placeholder="Bijv. [EMAIL VERWIJDERD]">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Regels Definiëren -->
+                <div class="card mb-4">
+                    <div class="card-header bg-word-blue text-white">
+                        <h5>Regels Definiëren</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted" style="line-height: 1.6; margin-bottom: 1rem;">
+                            Hier kun je handmatig regels toevoegen om specifieke woorden of patronen te anonimiseren.
+                            Vul bij "Originele Term" de tekst in die je wilt anonimiseren (bijv. <code style="color: var(--global-orange);">John Doe</code>).
+                            Vul bij "Vervanging" de placeholder in waarmee je deze tekst wilt vervangen (bijv. <code style="color: var(--global-orange);">[NAAM]</code>).
+                        </p>
+                        <p class="text-muted" style="line-height: 1.6; margin-bottom: 1rem;">
+                            <strong>*</strong> Je kunt de volgende opties gebruiken:
+                            <br><strong>Hoofdlettergevoelig:</strong> Als aangevinkt wordt <code style="color: var(--global-orange);">Test</code> niet gezien als <code style="color: var(--global-orange);">test</code>.
+                            <br><strong>Verwijder (i.p.v. vervangen):</strong> Verwijdert de gevonden tekst volledig. <strong>Let op:</strong> werkt NIET in combinatie met Reversible Mode.
+                            <br><strong>Regex Pattern:</strong> Gebruik reguliere expressies voor geavanceerd zoeken. <a href="#" style="color: var(--global-orange);" data-bs-toggle="collapse" data-bs-target="#regex-uitleg" aria-expanded="false">Klik hier voor de Regex Handleiding</a>.
+                        </p>
+
+                        <!-- Inklapbare Regex Handleiding -->
+                        <div class="collapse mb-3" id="regex-uitleg">
+                            <div class="card" style="border: 2px solid var(--word-blue);">
+                                <div class="card-header" style="background-color: white; border-bottom: 2px solid var(--word-blue);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0" style="color: var(--word-blue);">
+                                            Regex Pattern Handleiding
+                                        </h6>
+                                        <button type="button" class="btn btn-link p-0 text-decoration-none" data-bs-toggle="collapse" data-bs-target="#regex-uitleg" aria-label="Sluiten" style="color: var(--global-orange); font-size: 1.8rem; font-weight: bold; line-height: 1;">×</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p class="text-muted" style="line-height: 1.6;">
+                                        <strong>Regex</strong> (Regular Expressions) zijn patronen waarmee je geavanceerd kunt zoeken in tekst.
+                                        Hieronder vind je de meest gebruikte patronen:
+                                    </p>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr style="background-color: white !important; border: 2px solid var(--word-blue) !important;">
+                                                    <th style="color: var(--word-blue) !important; background-color: white !important; font-weight: bold;">Patroon</th>
+                                                    <th style="color: var(--word-blue) !important; background-color: white !important; font-weight: bold;">Betekenis</th>
+                                                    <th style="color: var(--word-blue) !important; background-color: white !important; font-weight: bold;">Voorbeeld</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><code style="color: var(--global-orange);">\d</code></td>
+                                                    <td>Een enkel cijfer (0-9)</td>
+                                                    <td><code style="color: var(--global-orange);">\d</code> vindt: <strong>5</strong> in "Test5"</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code style="color: var(--global-orange);">\d{4}</code></td>
+                                                    <td>Precies 4 cijfers achter elkaar</td>
+                                                    <td><code style="color: var(--global-orange);">\d{4}</code> vindt: <strong>2024</strong> in "Jaar 2024"</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code style="color: var(--global-orange);">\d{2,4}</code></td>
+                                                    <td>Tussen 2 en 4 cijfers</td>
+                                                    <td><code style="color: var(--global-orange);">\d{2,4}</code> vindt: <strong>123</strong> in "Code 123"</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code style="color: var(--global-orange);">\w</code></td>
+                                                    <td>Een letter, cijfer of underscore</td>
+                                                    <td><code style="color: var(--global-orange);">\w+</code> vindt: <strong>Test</strong> in "Test 123"</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code style="color: var(--global-orange);">\s</code></td>
+                                                    <td>Een spatie, tab of nieuwe regel</td>
+                                                    <td><code style="color: var(--global-orange);">\s</code> vindt spaties tussen woorden</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code style="color: var(--global-orange);">.</code></td>
+                                                    <td>Elk willekeurig karakter</td>
+                                                    <td><code style="color: var(--global-orange);">T.st</code> vindt: <strong>Test</strong> én <strong>Tast</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code style="color: var(--global-orange);">+</code></td>
+                                                    <td>1 of meer keer het vorige karakter</td>
+                                                    <td><code style="color: var(--global-orange);">\d+</code> vindt: <strong>123</strong> in "abc123xyz"</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code style="color: var(--global-orange);">*</code></td>
+                                                    <td>0 of meer keer het vorige karakter</td>
+                                                    <td><code style="color: var(--global-orange);">ab*c</code> vindt: <strong>ac</strong>, <strong>abc</strong>, <strong>abbc</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code style="color: var(--global-orange);">^</code></td>
+                                                    <td>Start van de tekst</td>
+                                                    <td><code style="color: var(--global-orange);">^Test</code> vindt alleen <strong>Test</strong> aan het begin</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><code style="color: var(--global-orange);">$</code></td>
+                                                    <td>Einde van de tekst</td>
+                                                    <td><code style="color: var(--global-orange);">einde$</code> vindt alleen <strong>einde</strong> aan het eind</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="alert alert-info mb-0">
+                                        <strong>💡 Praktijkvoorbeelden:</strong>
+                                        <ul class="mb-0 mt-2">
+                                            <li><code style="color: var(--global-orange);">\d{6}</code> = Postcode (6 cijfers)</li>
+                                            <li><code style="color: var(--global-orange);">\b\d{4}\s?[A-Z]{2}\b</code> = Nederlandse postcode (1234 AB of 1234AB)</li>
+                                            <li><code style="color: var(--global-orange);">Jan|Piet|Klaas</code> = Vind "Jan" OF "Piet" OF "Klaas"</li>
+                                            <li><code style="color: var(--global-orange);">[A-Z]{2,3}</code> = 2 of 3 hoofdletters achter elkaar</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="original-term" class="form-label fw-bold">Originele Term</label>
+                                <input type="text" class="form-control" id="original-term"
+                                       placeholder="Bijv. John Doe">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="replacement-term" class="form-label fw-bold">Vervanging</label>
+                                <input type="text" class="form-control" id="replacement-term"
+                                       placeholder="Bijv. [NAAM]">
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-3 mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="case-sensitive">
+                                <label class="form-check-label" for="case-sensitive">
+                                    Hoofdlettergevoelig
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="remove-instead">
+                                <label class="form-check-label" for="remove-instead">
+                                    Verwijder (i.p.v. vervangen)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="is-regex">
+                                <label class="form-check-label" for="is-regex">
+                                    Regex Pattern
+                                </label>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" id="add-rule-btn">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 0.5rem;">
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            Regel Toevoegen
+                        </button>
+
+                        <hr class="my-4">
+
+                        <h6 class="fw-bold mb-3">Actieve Regels</h6>
+                        <div id="rules-list">
+                            <div class="alert alert-info mb-0">
+                                <small>Nog geen regels toegevoegd. Voeg een regel toe om te beginnen.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Opmaak Behouden (DOCX) -->
+                <div class="card mb-4">
+                    <div class="card-header bg-word-blue text-white">
+                        <h5 class="mb-0">Opmaak Behouden (DOCX)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" role="switch" id="preserve-formatting">
+                            <label class="form-check-label" for="preserve-formatting">
+                                Inschakelen
+                            </label>
+                        </div>
+
+                        <p class="text-muted" style="line-height: 1.6;">
+                            Als je deze optie inschakelt, blijft de originele opmaak van <strong>DOCX</strong> bestanden behouden tijdens anonimisatie.
+                        </p>
+
+                        <p class="mb-2"><strong>Wat wordt behouden:</strong></p>
+                        <ul class="text-muted mb-3" style="line-height: 1.8;">
+                            <li><strong>Tekstopmaak:</strong> Bold, italic, underline, kleuren, lettertypen en groottes</li>
+                            <li><strong>Tabellen:</strong> Alle cellen met originele opmaak</li>
+                            <li><strong>Afbeeldingen:</strong> Blijven op dezelfde positie staan</li>
+                            <li><strong>Lijsten:</strong> Bullets en genummerde lijsten</li>
+                            <li><strong>Headers & Footers:</strong> Tekst in kop- en voetteksten wordt ook geanonimiseerd</li>
+                        </ul>
+
+                        <div class="alert alert-info mb-0" style="background-color: #d1ecf1; border-color: #bee5eb;">
+                            <strong>ℹ️ Let op:</strong> Deze optie werkt <strong>alleen voor .docx bestanden</strong>.
+                            TXT, MD (Markdown) en PDF bestanden worden altijd als platte tekst verwerkt.
+                            Als het behouden van opmaak mislukt, wordt automatisch teruggevallen op de standaard methode.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Reversible Mode -->
+                <div class="card mb-4">
+                    <div class="card-header bg-word-blue text-white">
+                        <h5 class="mb-0">Reversible Mode</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" role="switch" id="reversible-mode-text">
+                            <label class="form-check-label" for="reversible-mode-text">
+                                Inschakelen
+                            </label>
+                        </div>
+
+                        <p class="text-muted" style="line-height: 1.6;">
+                            Reversible Mode (omkeerbaar) betekent dat je de anonimisatie later ongedaan kunt maken.
+                            Wanneer ingeschakeld, wordt er naast het geanonimiseerde bestand ook een <code style="color: var(--global-orange);">mapping.json</code> bestand aangemaakt.
+                            Dit mapping bestand bevat een koppeling tussen de originele gegevens en de geanonimiseerde versies.
+                            Met dit bestand kun je later de originele data terughalen via de "De-Anonimisatie" sectie onderaan deze pagina.
+                        </p>
+
+                        <div class="alert alert-info mb-0" style="background-color: #d1ecf1; border-color: #bee5eb;">
+                            <strong>ℹ️ Belangrijk:</strong> Als je Reversible Mode inschakelt, worden <strong>ALLE</strong> placeholders die je hierboven hebt ingevuld genegeerd.
+                            <ul class="mb-0 mt-2">
+                                <li>Bij <strong>Automatische Detectie</strong>: placeholders zoals <code style="color: var(--global-orange);">[TEL VERWIJDERD]</code> worden vervangen door unieke codes zoals <code style="color: var(--global-orange);">[TEL-001]</code>, <code style="color: var(--global-orange);">[EMAIL-001]</code>, etc.</li>
+                                <li>Bij <strong>Regels Definiëren</strong>: je eigen placeholders zoals <code style="color: var(--global-orange);">[NAAM]</code> worden vervangen door unieke codes zoals <code style="color: var(--global-orange);">[PLACEHOLDER-001]</code>, <code style="color: var(--global-orange);">[PLACEHOLDER-002]</code>, etc.</li>
+                            </ul>
+                            <p class="mb-0 mt-2"><em>Dit is noodzakelijk om elke vervanging uniek te maken, zodat de data later correct teruggehaald kan worden.</em></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Process -->
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <button class="btn btn-word-blue btn-lg" id="process-text-btn">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 0.5rem;">
+                                <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                            </svg>
+                            Start Anonimisatie
+                        </button>
+                        <div id="progress-text" class="mt-3 d-none">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                     style="width: 0%" role="progressbar">
+                                    0%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Results -->
+                <div class="card">
+                    <div class="card-header bg-word-blue text-white">
+                        <h5>Resultaten</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="results-text">
+                            <div class="text-center py-5">
+                                <svg width="64" height="64" fill="currentColor" viewBox="0 0 16 16" style="color: #cbd5e0;">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                                <p class="text-muted mt-3 mb-0">Nog geen resultaten. Upload bestanden en start de anonimisatie.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== EXCEL/CSV TAB ========== -->
+    <div class="tab-pane fade" id="excel-panel">
+        <div class="row">
+            <div class="col-12">
+
+                <!-- Step 1: Upload Excel -->
+                <div class="card mb-4">
+                    <div class="card-header bg-excel-green text-white">
+                        <h5>Upload Excel/CSV Bestanden</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="dropzone" id="dropzone-excel">
+                            <input type="file" id="file-input-excel" multiple accept=".xlsx,.csv" class="d-none">
+                            <svg width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                            </svg>
+                            <p>Sleep Excel/CSV bestanden hierheen of <span class="text-excel-green">klik om te selecteren</span></p>
+                            <small>Ondersteunde formaten: XLSX en CSV</small>
+                        </div>
+                        <div id="file-list-excel" class="mt-4"></div>
+                    </div>
+                </div>
+
+                <!-- Excel Rules -->
+                <div class="card mb-4">
+                    <div class="card-header bg-excel-green text-white">
+                        <h5>Kolomregels Definiëren</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-3">
+                            Klik op de <strong>Preview</strong> knop bij je Excel bestand om de kolomnamen te zien.
+                        </p>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-4">
+                                <label for="excel-column-name" class="form-label fw-bold">
+                                    Stap 1: Kolomnaam
+                                </label>
+                                <input type="text" class="form-control" id="excel-column-name"
+                                       placeholder="Exacte naam uit Excel (bijv. Prijs)">
+                                <small class="text-muted">Let op hoofdletters!</small>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="excel-column-type" class="form-label fw-bold">
+                                    Stap 2: Wat voor type data?
+                                </label>
+                                <select class="form-select" id="excel-column-type">
+                                    <option value="text:supplier">✓ Leverancier / Supplier (reversible)</option>
+                                    <option value="text:artikelnaam">✓ Artikelnaam (reversible)</option>
+                                    <option value="text:artikelnummer">✓ Artikelnummer (reversible)</option>
+                                    <option value="text:provider">✓ Provider (reversible)</option>
+                                    <option value="text">✓ Tekst - generiek (reversible)</option>
+                                    <option disabled>──────────</option>
+                                    <option value="date">Datum</option>
+                                    <option value="number">Prijs / Nummer</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="excel-anonymization-type" class="form-label fw-bold">
+                                    Methode (automatisch gefilterd)
+                                </label>
+                                <select class="form-select" id="excel-anonymization-type">
+                                    <!-- Opties worden dynamisch getoond op basis van Type -->
+                                    <option value="replace">Vervangen met tekst</option>
+                                    <option value="jabber">Jabber (random tekst)</option>
+                                    <option value="date_offset" class="d-none">Datum verschuiven</option>
+                                    <option value="number_multiply" class="d-none">Prijs anonimiseren</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3" id="excel-replace-div">
+                            <label class="form-label fw-bold">Hoe wil je anonimiseren?</label>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="excel-anon-mode" id="excel-mode-fixed" value="fixed" checked>
+                                        <label class="form-check-label" for="excel-mode-fixed">
+                                            <strong>Vaste waarde</strong><br>
+                                            <small class="text-muted">Vervang alles met dezelfde tekst</small>
+                                        </label>
+                                    </div>
+                                    <div class="mt-2" id="excel-fixed-input">
+                                        <input type="text" class="form-control" id="excel-replace-with" placeholder="Bijv. [ANONIEM]">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="excel-anon-mode" id="excel-mode-reversible" value="reversible">
+                                        <label class="form-check-label" for="excel-mode-reversible">
+                                            <strong>Reversible (unieke placeholders)</strong><br>
+                                            <small class="text-muted">Bijv. [SUPPLIER-001], [SUPPLIER-002]</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reversible Mode Uitleg -->
+                            <div class="alert mt-3" style="background-color: #e2efda; border: 1px solid #217346;">
+                                <p class="mb-2" style="color: #185c37; font-weight: 600; font-size: 0.9rem;">
+                                    Wat doet Reversible mode?
+                                </p>
+                                <ul class="mb-2" style="color: #2d5016; font-size: 0.85rem; line-height: 1.6; padding-left: 1.25rem;">
+                                    <li>Elke unieke waarde krijgt een eigen placeholder: [SUPPLIER-001], [SUPPLIER-002]</li>
+                                    <li>Er wordt een mapping.json bestand gemaakt met de koppeling origineel ↔ placeholder</li>
+                                    <li>Je kunt later via "De-Anonimisatie" de originele data terughalen</li>
+                                </ul>
+                                <p class="mb-0" style="color: #2d5016; font-size: 0.85rem; line-height: 1.6;">
+                                    <strong>Gebruik reversible voor:</strong> Leveranciersnaam, Artikelnummer, Artikelnaam, Provider - kolommen waar je de exacte originele waarden later wilt terughalen.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 d-none" id="excel-date-div">
+                            <label for="excel-date-offset" class="form-label fw-bold">Datum offset (dagen)</label>
+                            <input type="number" class="form-control" id="excel-date-offset" value="7">
+                        </div>
+
+                        <div class="mb-3 d-none" id="excel-number-div">
+                            <div class="alert alert-warning small mb-3">
+                                <i class="bi bi-exclamation-triangle-fill"></i> <strong>Veiligheid:</strong> Als leverancier zijn originele prijs kent, kan hij de multiplier berekenen. Kies daarom een veilige strategie!
+                            </div>
+
+                            <label for="excel-price-strategy" class="form-label fw-bold">
+                                Stap 3: Kies Prijsanonimisatie Strategie
+                            </label>
+                            <select class="form-select mb-3" id="excel-price-strategy">
+                                <option value="fixed_multiplier">✓ Vaste multiplier (verhoudingen behouden - voor BI analyse)</option>
+                                <option value="random_per_price">🔒 Random per prijs (extra veilig - GEEN verhoudingen)</option>
+                                <option value="random_range">≈ Random range (beetje ruis - verhoudingen ongeveer behouden)</option>
+                            </select>
+
+                            <div id="excel-fixed-multiplier-input">
+                                <label for="excel-number-multiplier" class="form-label fw-bold">Vermenigvuldiger</label>
+                                <input type="number" step="0.01" class="form-control" id="excel-number-multiplier" value="0.25">
+                                <small class="text-muted">Bijvoorbeeld: 0.25 = alle prijzen worden 4x kleiner (€100 → €25)</small>
+                            </div>
+
+                            <div id="excel-random-range-input" class="d-none">
+                                <label for="excel-random-range-percent" class="form-label fw-bold">Ruis percentage (±%)</label>
+                                <input type="number" step="1" class="form-control" id="excel-random-range-percent" value="10">
+                                <small class="text-muted">Bijvoorbeeld: 10% = prijzen variëren tussen 90%-110% (€100 → €90-€110)</small>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-excel-green" id="add-excel-rule-btn">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 0.5rem;">
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            Excel Regel Toevoegen
+                        </button>
+
+                        <hr class="my-4">
+
+                        <h6 class="fw-bold mb-3">Actieve Excel Regels</h6>
+                        <div id="excel-rules-list">
+                            <div class="alert mb-0" style="background-color: #d4edda; border-color: var(--excel-green);">
+                                <small>Nog geen Excel regels toegevoegd.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Process Excel -->
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <button class="btn btn-excel-green btn-lg" id="process-excel-btn">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 0.5rem;">
+                                <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                            </svg>
+                            Start Excel Anonimisatie
+                        </button>
+                        <div id="progress-excel" class="mt-3 d-none">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                     style="width: 0%" role="progressbar">
+                                    0%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Excel Results -->
+                <div class="card">
+                    <div class="card-header bg-excel-green text-white">
+                        <h5>Resultaten</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="results-excel">
+                            <div class="text-center py-5">
+                                <svg width="64" height="64" fill="currentColor" viewBox="0 0 16 16" style="color: #cbd5e0;">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                                <p class="text-muted mt-3 mb-0">Nog geen resultaten. Upload Excel bestanden en start de anonimisatie.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Download All Button -->
+<div class="text-center my-5 d-none" id="download-all-section">
+    <button class="btn btn-lg btn-word-blue text-white shadow-custom download-all-btn" id="download-all-btn">
+        <svg width="22" height="22" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 0.5rem;">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg>
+        Download Alle Bestanden (ZIP)
+    </button>
+
+    <!-- Mapping Download Button (alleen zichtbaar bij reversible mode) -->
+    <button class="btn btn-lg btn-outline-primary shadow-custom ms-3 d-none" id="download-mapping-btn">
+        <svg width="22" height="22" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 0.5rem;">
+            <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+            <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+        </svg>
+        Download Mapping.json
+        <span class="badge bg-primary ms-2" id="mapping-count-badge">0</span>
+    </button>
+</div>
+
+<!-- Excel Opening Waarschuwing Info (alleen voor Excel tab) -->
+<div class="container">
+    <div class="alert mt-4 d-none" id="excel-warning-info" style="background-color: #e2efda; border: 1px solid #217346;">
+        <div class="d-flex align-items-start">
+            <svg width="24" height="24" fill="#217346" viewBox="0 0 16 16" style="flex-shrink: 0; margin-right: 0.75rem; margin-top: 0.125rem;">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+            </svg>
+            <div>
+                <p class="mb-2" style="color: #185c37; font-weight: 600; font-size: 0.95rem;">
+                    Excel Beveiligingswaarschuwing bij openen
+                </p>
+                <p class="mb-2" style="color: #2d5016; font-size: 0.875rem; line-height: 1.6;">
+                    Wanneer je een gedownload Excel bestand opent, toont Excel <strong>twee beveiligingswaarschuwingen</strong>:
+                </p>
+                <ol class="mb-3" style="color: #2d5016; font-size: 0.875rem; line-height: 1.6;">
+                    <li class="mb-2">
+                        <strong>Eerste popup:</strong> <em>"Er zijn problemen aangetroffen met bepaalde inhoud in [bestandsnaam].xlsx. Wilt u de inhoud zo veel mogelijk herstellen?"</em><br>
+                        → Klik op <strong>"Ja"</strong>
+                    </li>
+                    <li>
+                        <strong>Tweede popup:</strong> <em>"Het bestand is in Excel geopend nadat de onleesbare inhoud is hersteld of verwijderd."</em><br>
+                        → Klik op <strong>"Verwijderen"</strong> (of "Weergeven" als je de details wilt zien, beide zijn veilig)
+                    </li>
+                </ol>
+                <p class="mb-0" style="color: #2d5016; font-size: 0.875rem; line-height: 1.6;">
+                    <strong style="color: #185c37;">✓ Dit is normaal gedrag.</strong> Het bestand is volledig veilig en functioneel. Deze waarschuwingen verschijnen omdat Excel detecteert dat het bestand programmatisch is gegenereerd. Alle data blijft intact.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- De-anonimisatie Sectie -->
+<div class="card my-5 deanon-card" id="deanon-section">
+    <div class="card-header text-white deanon-header">
+        <h5 class="mb-0">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 0.5rem;">
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+            </svg>
+            De-Anonimisatie (Omkeren)
+        </h5>
+    </div>
+    <div class="card-body">
+        <p class="text-muted" style="line-height: 1.6;">
+            Met de De-Anonimisatie functie kun je een geanonimiseerd bestand terugzetten naar de originele data. Dit werkt alleen als je tijdens het anonimiseren <strong>Reversible Mode</strong> hebt ingeschakeld.
+        </p>
+
+        <p class="text-muted" style="line-height: 1.6;">
+            Als je <strong>Reversible Mode</strong> hebt gebruikt, download dan altijd de <strong>ZIP</strong> met alle bestanden.
+            In deze ZIP zit het <code style="color: var(--global-orange);">mapping.json</code> bestand dat je nodig hebt voor de-anonimisatie.
+            Zonder dit bestand kun je de originele data niet terughalen!
+        </p>
+
+        <p class="mb-3"><strong>Je hebt twee bestanden nodig:</strong></p>
+        <ul class="text-muted mb-4" style="line-height: 1.8;">
+            <li><strong>Geanonimiseerd bestand:</strong> Het bestand met de geanonimiseerde data (bijv. <code style="color: var(--global-orange);">Klantenlijst_2024_ann_1430.xlsx</code> of <code style="color: var(--global-orange);">Contract_ann_1532.docx</code>)</li>
+            <li><strong>Mapping.json bestand:</strong> Het bestand dat de koppeling bevat tussen geanonimiseerde placeholders en originele data (bijv. <code style="color: var(--global-orange);">mapping_sess2024.json</code>). Dit bestand zit altijd in de ZIP download.</li>
+        </ul>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="reverse-anonymized-file" class="form-label fw-bold">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 0.3rem;">
+                        <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                    </svg>
+                    Geanonimiseerd Bestand
+                </label>
+                <input type="file" class="form-control" id="reverse-anonymized-file"
+                       accept=".txt,.docx,.xlsx,.csv,.md">
+                <small class="text-muted">Upload het geanonimiseerde bestand (ann_*.txt/docx/xlsx/md)</small>
+            </div>
+            <div class="col-md-6">
+                <label for="reverse-mapping-file" class="form-label fw-bold">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 0.3rem;">
+                        <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                        <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                    </svg>
+                    Mapping.json Bestand
+                </label>
+                <input type="file" class="form-control" id="reverse-mapping-file"
+                       accept=".json">
+                <small class="text-muted">Upload het mapping.json bestand</small>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn btn-lg text-white shadow-custom deanon-button" id="deanonymize-btn">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 0.5rem;">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                    <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                </svg>
+                De-Anonimiseren
+            </button>
+        </div>
+
+        <!-- Reverse Results -->
+        <div id="reverse-results" class="mt-4"></div>
+    </div>
+</div>
+{% endblock %}

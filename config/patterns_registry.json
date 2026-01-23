@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "patterns": {
+    "phone_nl": {
+      "enabled": true,
+      "description": "Nederlandse telefoonnummers",
+      "context_words": ["telefoon", "mobiel", "tel", "gsm", "phone", "mobile", "bel", "bereikbaar"],
+      "confidence_boost": 0.1,
+      "detector_function": "detect_phones"
+    },
+    "email": {
+      "enabled": true,
+      "description": "E-mailadressen",
+      "context_words": ["email", "e-mail", "mail", "contact", "stuur", "verzend"],
+      "confidence_boost": 0.1,
+      "detector_function": "detect_emails"
+    },
+    "bsn": {
+      "enabled": true,
+      "description": "Burgerservicenummer (Dutch SSN)",
+      "context_words": ["burgerservicenummer", "bsn", "sofinummer", "sofi", "citizen service number", "identificatienummer"],
+      "confidence_boost": 0.2,
+      "detector_function": "detect_bsn"
+    },
+    "iban": {
+      "enabled": true,
+      "description": "IBAN bank account numbers",
+      "context_words": ["iban", "rekeningnummer", "bankrekeningnummer", "account number", "bank account", "rekening", "betaalrekening"],
+      "confidence_boost": 0.15,
+      "detector_function": "detect_iban"
+    },
+    "postal_code_nl": {
+      "enabled": true,
+      "description": "Nederlandse postcodes",
+      "context_words": ["postcode", "postal code", "zipcode", "zip", "adres", "address"],
+      "confidence_boost": 0.1,
+      "detector_function": "detect_postal_codes"
+    }
+  }
+}

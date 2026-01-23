@@ -1,0 +1,26 @@
+Test Document voor Anonimisatie Tests
+
+Contactpersonen:
+
+Jan de Vries
+Telefoon: 06-12345678
+Email: jan.devries@example.com
+Adres: 1234 AB Amsterdam
+
+Maria Jansen
+Mobiel: 0612345678
+E-mail: maria.jansen@bedrijf.nl
+Postcode: 5678 CD Rotterdam
+
+Kantoorinformatie:
+Tel: +31612345678
+Info: info@amsterdam.example.com
+Telefoonnummer: 06 12 34 56 78
+
+Dit is een test document met verschillende formats van Nederlandse telefoonnummers
+en email adressen voor testing doeleinden.
+
+Meer contacten:
+- Piet Bakker: piet.bakker@test.nl, 0031612345678
+- Els de Wit: els@domain.com, (06) 12345678
+- Kees Visser: kees.visser@example.org, 06.12.34.56.78

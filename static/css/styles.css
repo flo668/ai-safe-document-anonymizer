@@ -1,0 +1,994 @@
+/* Professional Enterprise Styles - Word & Excel Theme */
+
+:root {
+    /* Global Theme (navbar, headers, algemeen) */
+    --global-orange: #d97757;
+    --global-orange-dark: #c25d3f;
+    --global-orange-light: #f5ddd4;
+    --global-orange-lighter: #faf1ed;
+
+    /* Word Blue Theme (text tab specifiek) */
+    --word-blue: #2b579a;
+    --word-blue-dark: #1a3c6b;
+    --word-blue-light: #e8f0fb;
+    --word-blue-lighter: #f4f8fd;
+
+    /* Word Orange Theme (voor actie knoppen) */
+    --word-orange: #ff5e1a;
+    --word-orange-dark: #e54d0a;
+    --word-orange-light: #ffede5;
+    --word-orange-lighter: #fff6f2;
+
+    /* Excel Green Theme */
+    --excel-green: #217346;
+    --excel-green-dark: #185c37;
+    --excel-green-light: #e2efda;
+    --excel-green-lighter: #f1f8f4;
+
+    /* Neutral Colors */
+    --white: #ffffff;
+    --light-gray: #f5f7fa;
+    --border-gray: #d1d9e6;
+    --text-dark: #1a202c;
+    --text-gray: #718096;
+    --text-light: #a0aec0;
+
+    /* Status Colors */
+    --success: #198754;
+    --success-light: #d1e7dd;
+    --success-terra: var(--global-orange);
+    --success-terra-light: var(--global-orange-light);
+    --danger: #dc3545;
+    --danger-light: #f8d7da;
+    --warning: #ffc107;
+    --warning-light: #fff3cd;
+    --info: #2b579a;
+    --info-light: #e8f0fb;
+
+    /* Shadows */
+    --shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 8px rgba(0,0,0,0.12);
+    --shadow-lg: 0 8px 16px rgba(0,0,0,0.15);
+
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-dark);
+    background-color: var(--light-gray);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Main Container */
+main {
+    padding: 2.5rem 0;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+/* Page Header */
+h1 {
+    color: var(--global-orange-dark);
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.03em;
+}
+
+.lead {
+    color: var(--text-gray);
+    font-size: 1.125rem;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+}
+
+/* Tabs */
+.nav-tabs {
+    border: none;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+}
+
+.nav-tabs .nav-link {
+    border: 2px solid transparent;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-gray);
+    background-color: var(--white);
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-xs);
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: var(--border-gray);
+    color: var(--text-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Niet-actieve tabs met gekleurde rand */
+.nav-tabs #text-tab {
+    border-color: var(--word-blue);
+}
+
+.nav-tabs #excel-tab {
+    border-color: var(--excel-green);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--white);
+    background-color: var(--word-blue);
+    border-color: var(--word-blue);
+    box-shadow: var(--shadow-md);
+}
+
+.nav-tabs #text-tab.active {
+    background-color: var(--word-blue);
+    border-color: var(--word-blue);
+}
+
+.nav-tabs #excel-tab.active {
+    background-color: var(--excel-green);
+    border-color: var(--excel-green);
+}
+
+/* Cards */
+.card {
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    background-color: var(--white);
+    margin-bottom: 1.75rem;
+    transition: box-shadow var(--transition-normal);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card-header {
+    background-color: var(--word-blue);
+    color: var(--white);
+    border-bottom: none;
+    padding: 1.25rem 1.75rem;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    font-weight: 600;
+}
+
+.card-header.bg-global-orange {
+    background-color: var(--global-orange);
+    color: var(--white) !important;
+}
+
+.card-header.bg-global-orange h5 {
+    color: var(--white) !important;
+}
+
+.card-header.bg-word-blue {
+    background-color: var(--word-blue);
+}
+
+.card-header.bg-word-orange {
+    background-color: var(--word-orange);
+}
+
+.card-header.bg-excel-green {
+    background-color: var(--excel-green);
+}
+
+/* Button Styles */
+.btn-global-orange {
+    background-color: var(--global-orange);
+    border-color: var(--global-orange);
+    color: white;
+}
+
+.btn-global-orange:hover {
+    background-color: var(--global-orange-dark);
+    border-color: var(--global-orange-dark);
+    color: white;
+}
+
+.card-header h5 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.card-body {
+    padding: 1.75rem;
+}
+
+/* Dropzone */
+.dropzone {
+    border: 2px dashed var(--border-gray);
+    border-radius: var(--radius-md);
+    padding: 3.5rem 2rem;
+    text-align: center;
+    background-color: var(--white);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.dropzone:hover {
+    border-color: var(--word-blue);
+    background-color: var(--word-blue-lighter);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+#dropzone-excel:hover {
+    border-color: var(--excel-green);
+    background-color: var(--excel-green-lighter);
+}
+
+.dropzone.dragover {
+    border-color: var(--word-blue);
+    background-color: var(--word-blue-light);
+    border-style: solid;
+    border-width: 3px;
+    box-shadow: var(--shadow-md);
+}
+
+#dropzone-excel.dragover {
+    border-color: var(--excel-green);
+    background-color: var(--excel-green-light);
+}
+
+.dropzone svg {
+    margin-bottom: 1.25rem;
+    color: var(--word-blue);
+    opacity: 0.8;
+}
+
+#dropzone-excel svg {
+    color: var(--excel-green);
+}
+
+.dropzone p {
+    font-size: 1.0625rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.dropzone small {
+    color: var(--text-gray);
+    font-size: 0.875rem;
+}
+
+
+/* File Items */
+.file-item {
+    background-color: var(--white);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-md);
+    padding: 1.125rem 1.25rem;
+    margin-bottom: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all var(--transition-normal);
+}
+
+.file-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateX(4px);
+    border-color: var(--word-blue);
+}
+
+.file-item.success {
+    border-color: var(--success);
+    background-color: var(--success-light);
+    border-left: 4px solid var(--success);
+}
+
+/* Blue success variant voor Word/Text tab */
+.file-item.success-blue {
+    border-color: var(--word-blue);
+    background-color: var(--word-blue-light);
+    border-left: 4px solid var(--word-blue);
+}
+
+.file-item.error {
+    border-color: var(--danger);
+    background-color: var(--danger-light);
+    border-left: 4px solid var(--danger);
+}
+
+.file-item strong {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.file-item small {
+    color: var(--text-gray);
+    font-size: 0.875rem;
+}
+
+/* Badges */
+.badge {
+    padding: 0.4rem 0.875rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+/* Status Label - niet-klikbaar, onderscheidend van knoppen */
+.status-label {
+    display: inline-block;
+    padding: 0.25rem 0.625rem;
+    margin-left: 0.5rem;
+    background-color: var(--white);
+    color: var(--word-blue);
+    border: 1.5px solid var(--word-blue);
+    border-radius: 2px;  /* Rechte hoeken (bijna geen radius) */
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.status-label.excel-green {
+    color: var(--excel-green);
+    border-color: var(--excel-green);
+}
+
+/* Rule Items */
+.rule-item {
+    background-color: var(--word-blue-lighter);
+    border: 1px solid var(--word-blue);
+    border-left: 4px solid var(--word-blue);
+    border-radius: var(--radius-md);
+    padding: 1.125rem 1.25rem;
+    margin-bottom: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all var(--transition-normal);
+}
+
+.rule-item:hover {
+    box-shadow: var(--shadow-sm);
+    transform: translateX(4px);
+}
+
+.excel-rule-item {
+    background-color: var(--excel-green-lighter);
+    border-color: var(--excel-green);
+    border-left-color: var(--excel-green);
+}
+
+/* Form Controls */
+.form-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.625rem;
+    font-size: 0.9375rem;
+}
+
+.form-control,
+.form-select {
+    border: 1.5px solid var(--border-gray);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    font-size: 0.9375rem;
+    transition: all var(--transition-fast);
+}
+
+.form-control:hover,
+.form-select:hover {
+    border-color: var(--word-blue);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--word-blue);
+    box-shadow: 0 0 0 3px rgba(43, 87, 154, 0.1);
+    outline: none;
+}
+
+#excel-panel .form-control:hover,
+#excel-panel .form-select:hover {
+    border-color: var(--excel-green);
+}
+
+#excel-panel .form-control:focus,
+#excel-panel .form-select:focus {
+    border-color: var(--excel-green);
+    box-shadow: 0 0 0 3px rgba(33, 115, 70, 0.1);
+}
+
+.form-check-input {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: 2px solid var(--border-gray);
+    background-color: var(--white);
+}
+
+.form-check-input:checked {
+    background-color: var(--global-orange-dark);
+    border-color: var(--global-orange-dark);
+}
+
+.form-check-input:hover {
+    border-color: var(--text-gray);
+}
+
+#text-panel .form-check-input:checked {
+    background-color: var(--word-blue);
+    border-color: var(--word-blue);
+}
+
+#excel-panel .form-check-input:checked {
+    background-color: var(--excel-green);
+    border-color: var(--excel-green);
+}
+
+.form-check-label {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Radio buttons extra zichtbaar maken */
+input[type="radio"].form-check-input {
+    border-radius: 50%;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid #6c757d;
+    background-color: white;
+    margin-top: 0.125rem;
+    margin-right: 0.75rem;
+}
+
+input[type="radio"].form-check-input:hover {
+    border-color: #495057;
+    box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.1);
+}
+
+input[type="radio"].form-check-input:checked {
+    position: relative;
+    border-width: 2px;
+}
+
+#excel-panel input[type="radio"].form-check-input:checked {
+    background-color: var(--excel-green);
+    border-color: var(--excel-green);
+}
+
+#text-panel input[type="radio"].form-check-input:checked {
+    background-color: var(--word-blue);
+    border-color: var(--word-blue);
+}
+
+input[type="radio"].form-check-input:checked::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+/* Buttons */
+.btn {
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border: none;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    box-shadow: var(--shadow-xs);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-xs);
+}
+
+.btn-primary {
+    background-color: var(--word-blue);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--word-blue-dark);
+    color: var(--white);
+}
+
+.btn-success {
+    background-color: var(--word-orange);
+    color: var(--white);
+}
+
+.btn-success:hover {
+    background-color: var(--word-orange-dark);
+    color: var(--white);
+}
+
+.btn-word-blue {
+    background-color: var(--word-blue);
+    color: var(--white);
+    border: none;
+}
+
+.btn-word-blue:hover {
+    background-color: var(--word-blue-dark);
+    color: var(--white);
+}
+
+.btn-excel-green {
+    background-color: var(--excel-green);
+    color: var(--white);
+}
+
+.btn-excel-green:hover {
+    background-color: var(--excel-green-dark);
+    color: var(--white);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.btn-outline-success {
+    border: 2px solid var(--word-orange);
+    color: var(--word-orange);
+    background-color: var(--white);
+}
+
+.btn-outline-success:hover {
+    background-color: var(--word-orange);
+    color: var(--white);
+}
+
+.btn-outline-excel {
+    border: 2px solid var(--excel-green);
+    color: var(--excel-green);
+    background-color: var(--white);
+}
+
+.btn-outline-excel:hover {
+    background-color: var(--excel-green);
+    color: var(--white);
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+.btn-danger:hover {
+    background-color: #bb2d3b;
+}
+
+/* Progress Bar */
+.progress {
+    height: 2.5rem;
+    border-radius: var(--radius-md);
+    background-color: var(--light-gray);
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+    background-color: var(--word-blue);
+    font-weight: 700;
+    line-height: 2.5rem;
+    transition: width 0.4s ease;
+}
+
+#excel-panel .progress-bar {
+    background-color: var(--excel-green);
+}
+
+/* Results */
+.result-item {
+    background-color: var(--white);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    transition: all var(--transition-normal);
+}
+
+.result-item:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+.result-item.border-success,
+.result-item.success {
+    border-color: var(--success);
+    border-left: 4px solid var(--success);
+    background-color: var(--success-light);
+}
+
+.result-item.success-blue {
+    border-color: var(--word-blue);
+    border-left: 4px solid var(--word-blue);
+    background-color: var(--word-blue-light);
+}
+
+.result-item.border-danger {
+    border-color: var(--danger);
+    border-left: 4px solid var(--danger);
+    background-color: var(--danger-light);
+}
+
+/* Tables */
+.table {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-xs);
+}
+
+.table thead th {
+    background-color: var(--word-blue);
+    color: var(--white);
+    font-weight: 700;
+    border-bottom: none;
+    padding: 1rem 1.125rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Excel tabel header - groen in plaats van blauw */
+.table-excel thead th {
+    background-color: var(--excel-green);
+}
+
+.table tbody td {
+    padding: 1rem 1.125rem;
+    border-bottom: 1px solid var(--border-gray);
+    font-size: 0.9375rem;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table tbody tr:hover {
+    background-color: var(--word-blue-lighter);
+}
+
+/* Alerts */
+.alert {
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.alert-info {
+    background-color: var(--info-light);
+    color: var(--word-blue-dark);
+    border-color: var(--word-blue);
+}
+
+.alert-success {
+    background-color: var(--success-light);
+    color: var(--success);
+    border-color: var(--success);
+}
+
+.alert-warning {
+    background-color: var(--warning-light);
+    color: #664d03;
+    border-color: var(--warning);
+}
+
+.alert-danger {
+    background-color: var(--danger-light);
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--white);
+    border-top: 2px solid var(--border-gray);
+    margin-top: 4rem;
+    padding: 2rem 0;
+}
+
+/* Utility Classes */
+.shadow-custom {
+    box-shadow: var(--shadow-md);
+}
+
+.text-global-orange {
+    color: var(--global-orange-dark) !important;
+    font-weight: 600;
+}
+
+.text-word-blue {
+    color: var(--word-blue) !important;
+    font-weight: 600;
+}
+
+.text-word-orange {
+    color: var(--word-orange) !important;
+    font-weight: 600;
+}
+
+.text-excel-green {
+    color: var(--excel-green) !important;
+    font-weight: 600;
+}
+
+.bg-global-orange {
+    background-color: var(--global-orange) !important;
+}
+
+.bg-word-blue {
+    background-color: var(--word-blue) !important;
+}
+
+.bg-word-orange {
+    background-color: var(--word-orange) !important;
+}
+
+.bg-excel-green {
+    background-color: var(--excel-green) !important;
+}
+
+/* Page Header Section */
+.page-header {
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+}
+
+/* Icon Styles */
+.icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .lead {
+        font-size: 1rem;
+    }
+
+    .nav-tabs .nav-link {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.875rem;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .file-item,
+    .rule-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .dropzone {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .btn-lg {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--word-blue);
+    border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--word-blue-dark);
+}
+
+/* Green scrollbar for Excel preview modal */
+#excelPreviewModal .table-responsive::-webkit-scrollbar {
+    width: 12px;
+}
+
+#excelPreviewModal .table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: var(--radius-md);
+}
+
+#excelPreviewModal .table-responsive::-webkit-scrollbar-thumb {
+    background: var(--excel-green);
+    border-radius: var(--radius-md);
+}
+
+#excelPreviewModal .table-responsive::-webkit-scrollbar-thumb:hover {
+    background: var(--excel-green-dark);
+}
+
+/* Firefox scrollbar for Excel preview modal */
+#excelPreviewModal .table-responsive {
+    scrollbar-color: var(--excel-green) #f1f1f1;
+    scrollbar-width: thin;
+}
+
+/* Smooth Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease;
+}
+
+/* ========== De-Anonimisatie Tab-Specific Styling ========== */
+/* Dynamic border and colors based on active tab */
+
+.deanon-card {
+    border: 2px solid var(--word-blue) !important;
+    transition: border-color 0.3s ease;
+}
+
+.deanon-card.excel-mode {
+    border: 2px solid var(--excel-green) !important;
+}
+
+.deanon-header {
+    background-color: var(--word-blue);
+    transition: background-color 0.3s ease;
+}
+
+.deanon-header.excel-mode {
+    background-color: var(--excel-green);
+}
+
+.deanon-button {
+    background-color: var(--word-blue);
+    border-color: var(--word-blue);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.deanon-button:hover {
+    background-color: var(--word-blue-dark);
+    border-color: var(--word-blue-dark);
+}
+
+.deanon-button.excel-mode {
+    background-color: var(--excel-green);
+    border-color: var(--excel-green);
+}
+
+.deanon-button.excel-mode:hover {
+    background-color: var(--excel-green-dark);
+    border-color: var(--excel-green-dark);
+}
+
+/* ========== Excel Preview: Column Search & Filter ========== */
+.column-headers-container {
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+    background: var(--light-gray);
+    margin-bottom: 1rem;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.column-headers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.column-header {
+    padding: 0.5rem 1rem;
+    background: var(--white);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    user-select: none;
+}
+
+.column-header:hover {
+    background: var(--excel-green-light);
+    border-color: var(--excel-green);
+    color: var(--excel-green-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+#column-search {
+    border-color: var(--border-gray);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+#column-search:focus {
+    border-color: var(--excel-green);
+    box-shadow: 0 0 0 0.2rem rgba(33, 115, 70, 0.25);
+}
+
+#clear-search {
+    border-color: var(--border-gray);
+    color: var(--text-gray);
+    transition: all var(--transition-fast);
+}
+
+#clear-search:hover {
+    background-color: var(--light-gray);
+    border-color: var(--text-gray);
+    color: var(--text-dark);
+}
+
+#column-count-display {
+    transition: color var(--transition-fast);
+}
