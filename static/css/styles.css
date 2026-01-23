@@ -1,6 +1,14 @@
 /* Professional Enterprise Styles - Word & Excel Theme */
 
 :root {
+    /* NightStory Brand Colors */
+    --marine: #042648;
+    --terra: #d97757;
+    --bg: #faf9f5;
+    --sand: #e3dacc;
+    --card: #fffdf9;
+    --softblue: #6a9bcc;
+
     /* Global Theme (navbar, headers, algemeen) */
     --global-orange: #d97757;
     --global-orange-dark: #c25d3f;
@@ -66,9 +74,9 @@
 }
 
 body {
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-    color: var(--text-dark);
-    background-color: var(--light-gray);
+    font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--marine);
+    background-color: var(--bg);
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -85,7 +93,8 @@ main {
 
 /* Page Header */
 h1 {
-    color: var(--global-orange-dark);
+    font-family: 'Merriweather', serif;
+    color: var(--marine);
     font-weight: 700;
     font-size: 2.5rem;
     margin-bottom: 0.75rem;
@@ -93,10 +102,11 @@ h1 {
 }
 
 .lead {
-    color: var(--text-gray);
+    color: var(--terra);
     font-size: 1.125rem;
     line-height: 1.75;
     margin-bottom: 2.5rem;
+    font-weight: 400;
 }
 
 /* Tabs */
@@ -153,10 +163,10 @@ h1 {
 
 /* Cards */
 .card {
-    border: 1px solid var(--border-gray);
+    border: 1px solid var(--sand);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    background-color: var(--white);
+    background-color: var(--card);
     margin-bottom: 1.75rem;
     transition: box-shadow var(--transition-normal);
 }
@@ -231,38 +241,38 @@ h1 {
 }
 
 .dropzone:hover {
-    border-color: var(--word-blue);
-    background-color: var(--word-blue-lighter);
+    border-color: var(--terra);
+    background-color: var(--global-orange-lighter);
     transform: translateY(-2px);
     box-shadow: var(--shadow-sm);
 }
 
 #dropzone-excel:hover {
-    border-color: var(--excel-green);
-    background-color: var(--excel-green-lighter);
+    border-color: var(--terra);
+    background-color: var(--global-orange-lighter);
 }
 
 .dropzone.dragover {
-    border-color: var(--word-blue);
-    background-color: var(--word-blue-light);
+    border-color: var(--terra);
+    background-color: var(--global-orange-light);
     border-style: solid;
     border-width: 3px;
     box-shadow: var(--shadow-md);
 }
 
 #dropzone-excel.dragover {
-    border-color: var(--excel-green);
-    background-color: var(--excel-green-light);
+    border-color: var(--terra);
+    background-color: var(--global-orange-light);
 }
 
 .dropzone svg {
     margin-bottom: 1.25rem;
-    color: var(--word-blue);
+    color: var(--terra);
     opacity: 0.8;
 }
 
 #dropzone-excel svg {
-    color: var(--excel-green);
+    color: var(--terra);
 }
 
 .dropzone p {
@@ -758,6 +768,11 @@ input[type="radio"].form-check-input:checked::before {
 
 .text-excel-green {
     color: var(--excel-green) !important;
+    font-weight: 600;
+}
+
+.text-terra {
+    color: var(--terra) !important;
     font-weight: 600;
 }
 
